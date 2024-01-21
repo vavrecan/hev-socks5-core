@@ -322,6 +322,8 @@ splice_task_entry (void *data)
             break;
     }
 
+    splice->alive &= ~HEV_SOCKS5_UDP_ALIVE_F;
+ 
     hev_task_del_fd (task, fd);
     close (fd);
 }
@@ -356,6 +358,8 @@ hev_socks5_udp_splicer (HevSocks5UDP *self, int fd)
         if (hev_socks5_udp_fwd_b (self, &splice) < 0)
             break;
     }
+ 
+    splice.alive &= ~HEV_SOCKS5_UDP_ALIVE_B;
 
     hev_task_join (task);
     hev_task_unref (task);
